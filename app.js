@@ -3,10 +3,12 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
+const userRouter = require('./routes/user.Router');
 
 
 const app = express();
 
+//============ default middleware ============
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
@@ -15,6 +17,9 @@ app.use(cors({
     credentials: true
 }));
 
+
+//=============== Routes ==================
+app.use('/api/v1/user', userRouter);
 
 
 app.use('/ping', function(req, res){

@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
 const userRouter = require('./routes/user.Router');
+const errorMiddleware = require('./middlewares/error.middleware');
 
 
 const app = express();
@@ -31,6 +32,7 @@ app.all('*',(req, res)=>{
 });
 
 
+app.use(errorMiddleware);
 
 
 

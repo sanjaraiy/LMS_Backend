@@ -12,6 +12,8 @@ router.get('/logout', logoutHandler);
 router.get('/me',isLoggedIn, getProfileHandler);
 router.post('/reset', forgotPasswordHandler);
 router.post('/reset/:resetToken', resetPasswordHandler);
+router.post('/change-password', isLoggedIn, changePasswordHandler);
+router.put('/update', isLoggedIn, upload.single('avatar'), updateUserHandler);
 
 
 module.exports = router;

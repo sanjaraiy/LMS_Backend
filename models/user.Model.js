@@ -66,8 +66,14 @@ userSchema.methods = {
             expiresIn: process.env.JWT_EXPIRY,
         }
     )
+    },
+
+    comparePassword: async function(plainTextPassword){
+      return await bcryptjs.compare(plainTextPassword,this.password);
+      
     }
 }
+
 
 const User = mongoose.model('user', userSchema);
 

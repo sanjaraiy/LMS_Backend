@@ -3,6 +3,8 @@ const AppError =  require( "../utils/errorApi");
 const cloudinary = require('cloudinary');
 const fs = require('fs/promises');
 const sendEmail = require('../utils/sendEmail');
+const crypto = require('crypto');
+
 
 const cookieOptions = {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
@@ -185,6 +187,34 @@ const forgotPasswordHandler = async (req, res, next) =>{
       }
 }
 const resetPasswordHandler = async (req, res, next) =>{
+    const {resetToken} = req.params;
+
+    const {password} = req.body;
+
+    const forgotPasswordToken = crypto
+                                .createHash('sha256')
+                                .update(resetToken)
+                                .digest('hex');
+    
+    const user = await User.findOne({
+        forgotPasswordToken,
+        forgotPasswordExpiry: {$gt: Date.now()}
+    })
+
+    if(!user){
+        return next(new AppError('Token is invalid or expired, please try again', 400))
+    }
+
+    user.password = password;
+    user.forgotPasswordToken=undefined;
+    user.forgotPasswordExpiry=undefined;
+
+    user.save();
+
+    res.status(200).json({
+        success: true,
+        message: 'Password changed successfully!'
+    })
 
 }
 

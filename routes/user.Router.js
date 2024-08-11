@@ -16,4 +16,5 @@ router.post('/change-password', isLoggedIn, changePasswordHandler);
 router.put('/update', isLoggedIn, upload.single('avatar'), updateUserHandler);
 
 
+
 module.exports = router;

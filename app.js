@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
 const userRouter = require('./routes/user.Router');
+const  courseRouter = require('./routes/course.Router');
 const errorMiddleware = require('./middlewares/error.middleware');
 
 
@@ -22,7 +23,7 @@ app.use(cors({
 
 //=============== Routes ==================
 app.use('/api/v1/user', userRouter);
-
+app.use('/api/v1/courses', courseRouter);
 
 app.use('/ping', function(req, res){
      res.send('/pong');

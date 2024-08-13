@@ -1,6 +1,7 @@
 const Course = require("../models/course.Model");
 const AppError = require("../utils/errorApi");
 const fs = require('fs/promises');
+const cloudinary = require('cloudinary');
 
 const getAllCoursesgHandler = async (req, res, next) => {
     try {
@@ -49,43 +50,93 @@ const createCourseHandler = async (req, res, next) => {
         return next(new AppError('All fields are required', 400));
       }
 
-      const course = await Course.create({
-        title,
-        description,
-        category,
-        createdBy,
-      });
-
-      if(!course){
-         return next(new AppError('Course could not created, please try again', 500));
-      }
-
-      if(req.file){
-        const result = await cloudinary.v2.uploader.upload(req.file.path, {
-            folder: 'lms'
+      try {
+        const course = await Course.create({
+          title,
+          description,
+          category,
+          createdBy,
+          thumbnail: {
+             public_id: 'Dummy',
+             secure_url: 'Dummy',
+          },
         });
-        if(result){
-            course.thumbnail.public_id = result.public_id;
-            course.thumbnail.secure_url = result.secure_url;
+  
+        if(!course){
+           return next(new AppError('Course could not created, please try again', 500));
         }
-
-        fs.rm(`upload/${req.file.filename}`);
+  
+        if(req.file){
+          const result = await cloudinary.v2.uploader.upload(req.file.path, {
+              folder: 'lms'
+          });
+          if(result){
+              course.thumbnail.public_id = result.public_id;
+              course.thumbnail.secure_url = result.secure_url;
+          }
+  
+          fs.rm(`upload/${req.file.filename}`);
+        }
+  
+        await course.save();
+        res.status.json({
+          success: true,
+          message: 'Course created successfully',
+          course,
+        })
+      } catch (error) {
+         return next(new AppError(error.message, 500));
       }
-
-      await course.save();
-      res.status.json({
-        success: true,
-        message: 'Course created successfully',
-        course,
-      });
 }
 
 const updateCourseHandler = async (req, res, next) => {
+   try {
+      const {id} = req.params;
+      const course = await Course.findByIdAndUpdate(
+        id,
+        {
+            $set: req.body
+        },
+        {   //It validates the incoming data as per course model(courseSchema)
+            runValidators: true
+        }
+      );
 
+      if(!course){
+         return next(new AppError('Course with given id does not exist', 500));
+      }
+
+      res.status(200).json({
+        success: true,
+        message: 'Course updated successfully!',
+        course
+      })
+   } catch (error) {
+      return next(new AppError(e.message, 500));
+   }
 }
 
 const removeCourseHandler = async (req, res, next) => {
-     
+     try {
+        const {id} = req.params;
+        const course = await Course.findById(id);
+        if(!course){
+            return next(new AppError('Course with given id does not exist',500));
+        }
+
+        await Course.findByIdAndDelete(id);
+        res.status(200).json({
+            success: true,
+            message: 'Course deleted successfully'
+        })
+     } catch (error) {
+        return next(new AppError(e.message, 500));
+     }
+}
+
+
+const addLectureToCourseByIdHandler = async (req, res, next) => {
+    
 }
 
 module.exports = {

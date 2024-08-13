@@ -19,6 +19,6 @@ v2.config({
 
 
 app.listen(PORT,async()=>{
-    // await connectionDB();
     console.log(`Server is running at port: ${PORT}`);
+    await connectionDB();
 })

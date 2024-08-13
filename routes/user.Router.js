@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerHandler, loginHandler, logoutHandler, getProfileHandler, forgotPasswordHandler, resetPasswordHandler } = require('../controllers/user.Controller');
+const { registerHandler, loginHandler, logoutHandler, getProfileHandler, forgotPasswordHandler, resetPasswordHandler, changePasswordHandler, updateUserHandler } = require('../controllers/user.Controller');
 const isLoggedIn = require('../middlewares/auth.middleware');
 const upload = require('../middlewares/multer.middleware');
 

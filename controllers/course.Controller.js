@@ -1,6 +1,6 @@
 const Course = require("../models/course.Model");
 const AppError = require("../utils/errorApi");
-
+const fs = require('fs/promises');
 
 const getAllCoursesgHandler = async (req, res, next) => {
     try {
@@ -42,7 +42,56 @@ const getLectureByCourseIdHandler = async (req, res, next) => {
    }
 }
 
+const createCourseHandler = async (req, res, next) => {
+      const {title, description, category, createdBy} = req.body;
+
+      if(!title || !description || !category || !createdBy){
+        return next(new AppError('All fields are required', 400));
+      }
+
+      const course = await Course.create({
+        title,
+        description,
+        category,
+        createdBy,
+      });
+
+      if(!course){
+         return next(new AppError('Course could not created, please try again', 500));
+      }
+
+      if(req.file){
+        const result = await cloudinary.v2.uploader.upload(req.file.path, {
+            folder: 'lms'
+        });
+        if(result){
+            course.thumbnail.public_id = result.public_id;
+            course.thumbnail.secure_url = result.secure_url;
+        }
+
+        fs.rm(`upload/${req.file.filename}`);
+      }
+
+      await course.save();
+      res.status.json({
+        success: true,
+        message: 'Course created successfully',
+        course,
+      });
+}
+
+const updateCourseHandler = async (req, res, next) => {
+
+}
+
+const removeCourseHandler = async (req, res, next) => {
+     
+}
+
 module.exports = {
     getAllCoursesgHandler,
     getLectureByCourseIdHandler,
+    createCourseHandler,
+    updateCourseHandler,
+    removeCourseHandler,
 }

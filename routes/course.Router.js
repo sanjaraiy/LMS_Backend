@@ -1,5 +1,5 @@
 const express = require('express');
-const { createCourseHandler, updateCourseHandler, removeCourseHandler, getLectureByCourseIdHandler, getAllCoursesgHandler } = require('../controllers/course.Controller');
+const { createCourseHandler, updateCourseHandler, removeCourseHandler, getLectureByCourseIdHandler, getAllCoursesgHandler, addLectureToCourseByIdHandler, removeLectureFromCourseHandler } = require('../controllers/course.Controller');
 const upload = require('../middlewares/multer.middleware');
 const {isLoggedIn, authorizedRoles} = require('../middlewares/auth.middleware');
 
@@ -16,8 +16,8 @@ router.route('/:id')
     .get(isLoggedIn, getLectureByCourseIdHandler)
     .put(isLoggedIn ,authorizedRoles('ADMIN'), updateCourseHandler)
     .delete(isLoggedIn ,authorizedRoles('ADMIN'), removeCourseHandler)
-    .post(isLoggedIn ,authorizedRoles('ADMIN'), addLectureToCourseByIdHandler)
-
+    .post(isLoggedIn ,authorizedRoles('ADMIN'), upload.single('lecture'), addLectureToCourseByIdHandler)
+    .delete(isLoggedIn, authorizedRoles('ADMIN'), removeLectureFromCourseHandler);
 
 
 

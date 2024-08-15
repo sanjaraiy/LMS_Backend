@@ -1,22 +1,23 @@
 const express = require('express');
-const { getRazorayApiKeyHandler, buySubscriptionHandler, verifySubscriptionHandler, cancelSubscriptionHandler, allPaymentsHandler } = require('../controllers/payment.Controller');
+const { getRazorpayApiKeyHandler, buySubscriptionHandler, verifySubscriptionHandler, cancelSubscriptionHandler, allPaymentsHandler } = require('../controllers/payment.Controller');
+const { isLoggedIn, authorizedRoles } = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 
 router
-    .route('/razorpay-key').get(getRazorayApiKeyHandler)
+    .route('/razorpay-key').get(isLoggedIn, getRazorpayApiKeyHandler)
 
 router
-    .route('/subscribe').post(buySubscriptionHandler)
+    .route('/subscribe').post(isLoggedIn, buySubscriptionHandler)
 
 router
-    .route('/verify').post(verifySubscriptionHandler)
+    .route('/verify').post(isLoggedIn, verifySubscriptionHandler)
 
 router
-    .route('/unsubscribe').post(cancelSubscriptionHandler)
+    .route('/unsubscribe').post(isLoggedIn, cancelSubscriptionHandler)
 
 router 
-    .route('/').get(allPaymentsHandler)
+    .route('/').get(isLoggedIn, authorizedRoles('ADMIN'), allPaymentsHandler)
 
 
 

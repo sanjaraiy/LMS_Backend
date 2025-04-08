@@ -35,6 +35,7 @@ const authorizeSubscriber = async (req, res, next) => {
 
    next();
 }
+
 module.exports ={
     isLoggedIn,
     authorizedRoles,

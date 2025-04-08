@@ -23,7 +23,7 @@ const razorpay = new Razorpay({
 
 module.exports = razorpay;
 
-app.listen(PORT,async()=>{
+app.listen(PORT, async()=>{
     console.log(`Server is running at port: ${PORT}`);
     await connectionDB();
 })

@@ -36,7 +36,7 @@ const getLectureByCourseIdHandler = async (req, res, next) => {
         res.status(200).json({
            success: true,
            message: 'All courses',
-           courses,
+           course,
         })
    } catch (error) {
         return next(new AppError(error.message, 500))

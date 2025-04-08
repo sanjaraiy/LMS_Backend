@@ -12,7 +12,7 @@ const cookieOptions = {
     secure: true,
 }
 
-const registerHandler = async (req,res,next) => {
+const registerHandler = async (req, res, next) => {
      const {fullName, email, password} = req.body;
 
      if(!fullName || !email || !password){
@@ -84,7 +84,7 @@ const registerHandler = async (req,res,next) => {
 
 };
 
-const loginHandler = async (req,res,next) => {
+const loginHandler = async (req, res, next) => {
    try {
      const {email, password} = req.body;
  
@@ -117,7 +117,7 @@ const loginHandler = async (req,res,next) => {
 
 }
 
-const logoutHandler = async (req,res,next) => {
+const logoutHandler = async (req, res, next) => {
      res.cookie('token',null, {
         secure: true,
         maxAge: 0,
@@ -130,7 +130,7 @@ const logoutHandler = async (req,res,next) => {
      })
 }
 
-const getProfileHandler =async (req,res,next) => {
+const getProfileHandler =async (req, res, next) => {
     try {
         const userId = req.user.id;
         const user = await User.findById(userId);
@@ -145,7 +145,6 @@ const getProfileHandler =async (req,res,next) => {
     }
 
 }
-
 
 const forgotPasswordHandler = async (req, res, next) =>{
       const {email} =req.body;
@@ -300,6 +299,7 @@ const updateUserHandler = async (req, res, next) => {
    });
    
 }
+
 module.exports = {
     registerHandler,
     loginHandler,

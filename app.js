@@ -32,7 +32,7 @@ app.use('/ping', function(req, res){
      res.send('/pong');
 });
 
-app.all('*',(req, res)=>{
+app.all('*', (req, res) => {
     res.status(404).send('OOPS!! 404 page not found');
 });
 

@@ -24,3 +24,4 @@ const sendEmail = async function (email, subject, message){
     });
 }
 
+module.exports = sendEmail;

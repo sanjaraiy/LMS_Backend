@@ -1,11 +1,10 @@
 const express = require('express');
-const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-
+const cors = require('cors');
 const userRouter = require('./routes/userRouter');
 const courseRouter = require('./routes/courseRouter');
-const PaymentRouter = require('./routes/paymentRoute');
+const paymentRouter = require('./routes/paymentRoute');
 
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
@@ -22,11 +21,10 @@ app.use(cors({
     credentials: true
 }));
 
-
 //=============== Routes ==================
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/courses', courseRouter);
-app.use('/api/v1/payments', PaymentRouter);
+app.use('/api/v1/payments', paymentRouter);
 
 app.use('/ping', function(req, res){
      res.send('/pong');

@@ -1,12 +1,17 @@
-const app = require('./app');
 const env = require('dotenv');
 const connectionDB = require('./config/dbConnection');
 const {v2} = require('cloudinary');
 const Razorpay = require('razorpay');
 
-
 env.config();
+
+const app = require('./app');
+
+
 const PORT = process.env.PORT || 5000;
+
+
+
 
 //Cloudinary configuration
 v2.config({
@@ -16,12 +21,12 @@ v2.config({
 });
 
 //Instance of Razorpay
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_SECRET,
-});
+// const razorpay = new Razorpay({
+//     key_id: process.env.RAZORPAY_KEY_ID,
+//     key_secret: process.env.RAZORPAY_SECRET,
+// });
 
-module.exports = razorpay;
+// module.exports = razorpay;
 
 app.listen(PORT, async()=>{
     console.log(`Server is running at port: ${PORT}`);

@@ -3,11 +3,11 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
-const userRouter = require('./routes/user.Router');
-const courseRouter = require('./routes/course.Router');
-const PaymentRouter = require('./routes/payment.Route');
+const userRouter = require('./routes/userRouter');
+const courseRouter = require('./routes/courseRouter');
+const PaymentRouter = require('./routes/paymentRoute');
 
-const errorMiddleware = require('./middlewares/error.middleware');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
 
 const app = express();

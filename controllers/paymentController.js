@@ -1,6 +1,6 @@
 const razorpay = require('../app')
-const Payment = require('../models/payment.Model');
-const User = require('../models/user.Model');
+const Payment = require('../models/paymentModel');
+const User = require('../models/userModel');
 const AppError = require('../utils/errorApi');
 
 const getRazorpayApiKeyHandler = async (req, res, next) => {

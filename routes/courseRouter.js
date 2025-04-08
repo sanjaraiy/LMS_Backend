@@ -1,7 +1,7 @@
 const express = require('express');
-const { createCourseHandler, updateCourseHandler, removeCourseHandler, getLectureByCourseIdHandler, getAllCoursesgHandler, addLectureToCourseByIdHandler, removeLectureFromCourseHandler } = require('../controllers/course.Controller');
-const upload = require('../middlewares/multer.middleware');
-const {isLoggedIn, authorizedRoles, authorizeSubscriber} = require('../middlewares/auth.middleware');
+const { createCourseHandler, updateCourseHandler, removeCourseHandler, getLectureByCourseIdHandler, getAllCoursesgHandler, addLectureToCourseByIdHandler, removeLectureFromCourseHandler } = require('../controllers/courseController');
+const upload = require('../middlewares/multerMiddleware');
+const {isLoggedIn, authorizedRoles, authorizeSubscriber} = require('../middlewares/authMiddleware');
 
 //====== Isolated route for courses ==========
 const router = express.Router();

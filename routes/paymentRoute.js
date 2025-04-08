@@ -1,6 +1,6 @@
 const express = require('express');
-const { getRazorpayApiKeyHandler, buySubscriptionHandler, verifySubscriptionHandler, cancelSubscriptionHandler, allPaymentsHandler } = require('../controllers/payment.Controller');
-const { isLoggedIn, authorizedRoles } = require('../middlewares/auth.middleware');
+const { getRazorpayApiKeyHandler, buySubscriptionHandler, verifySubscriptionHandler, cancelSubscriptionHandler, allPaymentsHandler } = require('../controllers/paymentController');
+const { isLoggedIn, authorizedRoles } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 

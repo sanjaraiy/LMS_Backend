@@ -1,4 +1,4 @@
-const User = require("../models/user.Model");
+const User = require("../models/userModel");
 const AppError =  require( "../utils/errorApi");
 const cloudinary = require('cloudinary');
 const fs = require('fs/promises');

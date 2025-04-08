@@ -1,4 +1,4 @@
-const Course = require("../models/course.Model");
+const Course = require("../models/courseModel");
 const AppError = require("../utils/errorApi");
 const fs = require('fs/promises');
 const cloudinary = require('cloudinary');

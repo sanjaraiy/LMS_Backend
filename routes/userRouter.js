@@ -1,7 +1,7 @@
 const express = require('express');
-const { registerHandler, loginHandler, logoutHandler, getProfileHandler, forgotPasswordHandler, resetPasswordHandler, changePasswordHandler, updateUserHandler } = require('../controllers/user.Controller');
-const isLoggedIn = require('../middlewares/auth.middleware');
-const upload = require('../middlewares/multer.middleware');
+const { registerHandler, loginHandler, logoutHandler, getProfileHandler, forgotPasswordHandler, resetPasswordHandler, changePasswordHandler, updateUserHandler } = require('../controllers/userController');
+const {isLoggedIn} = require('../middlewares/authMiddleware');
+const upload = require('../middlewares/multerMiddleware');
 
 //======= Isolated router for user =============
 const router = express.Router();
